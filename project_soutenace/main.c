@@ -9,7 +9,7 @@ char age[100][50];
 char statut[100][40];
 char date[100][50];
 int reference[100];
-int x = 0; // Start from 0 for actual reservations
+int x = 0;
 
 void menu(int choix) {
     printf("\n------------ menu ----------------------:\n");
@@ -27,7 +27,7 @@ void menu(int choix) {
 }
 
 void afficher_menu_statut() {
-    printf("Choisissez le statut:\n");
+    printf("choisisez le statut:\n");
     printf("1. valide\n");
     printf("2. reporte\n");
     printf("3. annule\n");
@@ -35,20 +35,20 @@ void afficher_menu_statut() {
 }
 
 void ajouter() {
-    printf("Entrez les informations suivantes pour une nouvelle reservation:\n");
+    printf("entrez les informations suivantes pour une nouvelle reservation:\n");
 
-    printf("Entrez le nom: ");
+    printf("entrez le nom: ");
     scanf("%s", nom[x]);
-    printf("Entrez le prenom: ");
+    printf("entrez le prenom: ");
     scanf("%s", prenom[x]);
-    printf("Entrez le telephone: ");
+    printf("entrez le telephone: ");
     scanf("%s", telephone[x]);
-    printf("Entrez l'age: ");
+    printf("entrez l'age: ");
     scanf("%s", age[x]);
 
     afficher_menu_statut();
     int choix_statut;
-    printf("Choisissez une option: ");
+    printf("choisissez une option: ");
     scanf("%d", &choix_statut);
     switch (choix_statut) {
         case 1:
@@ -64,22 +64,22 @@ void ajouter() {
             strcpy(statut[x], "traite");
             break;
         default:
-            printf("Choix invalide. Statut par defaut mis a 'annule'.\n");
+            printf("choix invalide statut par defaut mis a 'annule'.\n");
             strcpy(statut[x], "annule");
             break;
     }
 
-    printf("Entrez la date de reservation (yyyy-mm-dd): ");
+    printf("entrez la date de reservation (yyyy-mm-dd): ");
     scanf("%s", date[x]);
 
-    reference[x] = x + 1; // Assign reference
+    reference[x] = x + 1;
     x++;
-    printf("Reservation ajoutee avec succes. Reference: %d\n", reference[x - 1]);
+    printf("reservation ajoutee avec succes reference: %d\n", reference[x - 1]);
 }
 
 void modifier() {
     int ref_modif;
-    printf("Entrez la reference a modifier: ");
+    printf("entrez la reference a modifier: ");
     scanf("%d", &ref_modif);
 
     int found = 0;
@@ -100,13 +100,13 @@ void modifier() {
         }
     }
     if (!found) {
-        printf("Reservation non trouvee.\n");
+        printf("reservation non trouvee.\n");
     }
 }
 
 void supprimer() {
     int ref_sup;
-    printf("Entrez la reference que vous souhaitez supprimer: ");
+    printf("entrez la reference que vous souhaitez supprimer: ");
     scanf("%d", &ref_sup);
 
     int found = 0;
@@ -123,12 +123,12 @@ void supprimer() {
             }
             x--;
             found = 1;
-            printf("Reservation supprimee avec succes.\n");
+            printf("reservation supprimee avec succes.\n");
             break;
         }
     }
     if (!found) {
-        printf("Reservation non trouvee.\n");
+        printf("reservation non trouvee.\n");
     }
 }
 
@@ -147,7 +147,7 @@ void afficher() {
 
 void afficher_details_par_reference() {
     int ref;
-    printf("Entrez la reference : ");
+    printf("entrez la reference : ");
     scanf("%d", &ref);
 
     for (int i = 0; i < x; i++) {
@@ -163,14 +163,14 @@ void afficher_details_par_reference() {
             return;
         }
     }
-    printf("Reservation non trouvee.\n");
+    printf("reservation non trouvee.\n");
 }
 
 void trier_par_nom() {
     for (int i = 0; i < x - 1; i++) {
         for (int j = i + 1; j < x; j++) {
             if (strcmp(nom[i], nom[j]) > 0) {
-                // Swap logic for all fields
+
                 char temp[50];
                 strcpy(temp, nom[i]);
                 strcpy(nom[i], nom[j]);
@@ -202,14 +202,14 @@ void trier_par_nom() {
             }
         }
     }
-    printf("Reservations triees par nom.\n");
+    printf("reservations triees par nom.\n");
 }
 
 void trier_par_statut() {
     for (int i = 0; i < x - 1; i++) {
         for (int j = i + 1; j < x; j++) {
             if (strcmp(statut[i], statut[j]) > 0) {
-                // Swap logic for all fields
+
                 char temp[50];
                 strcpy(temp, nom[i]);
                 strcpy(nom[i], nom[j]);
@@ -241,7 +241,7 @@ void trier_par_statut() {
             }
         }
     }
-    printf("Reservations triees par statut.\n");
+    printf("reservations triees par statut.\n");
 }
 
 void fakedata() {
@@ -261,13 +261,13 @@ void fakedata() {
         strcpy(age[x], fake_age[i]);
         strcpy(statut[x], fake_statut[i]);
         strcpy(date[x], fake_date[i]);
-        reference[x] = x + 1;  // Initialize reference
+        reference[x] = x + 1;
         x++;
     }
 }
 
 int main() {
-    fakedata(); // Initialize fake data
+    fakedata();
 
     int choix;
     while (1) {
@@ -289,7 +289,7 @@ int main() {
                 afficher();
                 break;
             case 6:
-                // Here you can call your statistics functions if needed
+
                 break;
             case 7:
                 printf("1. trier par nom\n2. trier par statut\n");
@@ -300,17 +300,17 @@ int main() {
                 } else if (tri_choix == 2) {
                     trier_par_statut();
                 } else {
-                    printf("Choix invalide.\n");
+                    printf("choix invalide.\n");
                 }
                 break;
             case 8:
-                // Implement search logic if needed
+
                 break;
             case 9:
-                printf("Quitter le programme.\n");
+                printf("quitter le programme.\n");
                 exit(0);
             default:
-                printf("Choix invalide, reessayez.\n");
+                printf("choix invalide, reessayez.\n");
                 break;
         }
     }
