@@ -18,7 +18,9 @@ void menu(int *choix) {
     printf("2. modifier une reservation\n");
     printf("3. supprimer une reservation\n");
     printf("4. afficher les details d'une reservation\n");
-    printf("8. quitter\n");
+    printf("5. statistiques\n");
+    printf("6. trier les réservations\n");
+    printf("7. quitter\n");
     printf("choisissez une option: ");
     scanf("%d", choix);
 }
@@ -120,17 +122,22 @@ int main() {
         switch (choix) {
             case 1:
                 ajouter();
-                break;
+            break;
             case 2:
                 modifier();
-                break;
+            break;
             case 3:
                 supprimer();
-                break;
+            break;
             case 4:
                 afficher();
-                break;
-            case 8:
+            break;
+            case 5 :
+            break ;
+            case 6 :
+            break ;
+
+            case 7:
                 printf("quitter le programme.\n");
                 exit(0);
             default:
