@@ -1,163 +1,142 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-       char nom [100][50];
-       char prenom [100][50];
-       char telephone [100][50];
-       char age [100][50];
-       char statut[100][40];
-       int reference =0 ;
-       char date[100];
-       char nom_modi [100];
-       int x=0;
-       int i;
-        int choix;
-        char nom_sup ;
-        int S =0;
 
-void menu (){
+char nom[100][50];
+char prenom[100][50];
+char telephone[100][50];
+char age[100][50];
+char statut[100][40];
+char date[100][50];
+int reference = 0;
+int x = 0;
+char nom_sup[50];
 
-        printf("\n------------MENU----------------------:\n");
-        printf("1. ajouter une reservation\n");
-        printf("2. modifier une reservation\n");
-        printf("3. supprimer une reservation\n");
-        printf("4. afficher les details d'une reservation\n");
-        printf("5. afficher toutes les reservations\n");
-        printf("6. statistiques\n");
-        printf("7. quitter\n");
-        printf("choisez une choix: ");
-        scanf("%d", &choix);
-
+void menu(int *choix) {
+    printf("\n------------ menu ----------------------:\n");
+    printf("1. ajouter une reservation\n");
+    printf("2. modifier une reservation\n");
+    printf("3. supprimer une reservation\n");
+    printf("4. afficher les details d'une reservation\n");
+    printf("8. quitter\n");
+    printf("choisissez une option: ");
+    scanf("%d", choix);
 }
-void ajouter()
-{
-    printf("entrez les information suivent pour nouvelle réservation :\n ");
 
-    printf("Entrez le nom: ");
-    scanf("%s",&nom[x]);
-    printf("Entrez le prenom: ");
-    scanf("%s",&prenom[x]);
-    printf("Entrez le telephone: ");
-    scanf("%s",&telephone);
-    printf("Entrez l'age: ");
-    scanf("%s",&age);
-    printf("Entrez le statut (valide, reporte, annule, trait): ");
-    scanf("%s",&statut);
-    reference = x+ 1;
-    printf("Entrez la date de réservation (yyy-mm-dd): ");
-    scanf("%s", &date);
+void ajouter() {
+    printf("entrez les informations suivantes pour une nouvelle reservation:\n");
+
+    printf("entrez le nom: ");
+    scanf("%s", nom[x]);
+    printf("entrez le prenom: ");
+    scanf("%s", prenom[x]);
+    printf("entrez le telephone: ");
+    scanf("%s", telephone[x]);
+    printf("entrez l'age: ");
+    scanf("%s", age[x]);
+    printf("entrez le statut (valide, reporte, annule, traite): ");
+    scanf("%s", statut[x]);
+    printf("entrez la date de reservation (yyyy-mm-dd): ");
+    scanf("%s", date[x]);
+
+    reference = x + 1;
     x++;
 }
-void modifier()
-{
-    int reference ;
-    char nom_modi ;
-    printf("entrez le nom  or referance que vous souhaitez a modifier :\n");
-    printf("Nom : ");
-    printf("entrez SVP  refrence  ou nom:\n");
 
-    scanf("%s""%s",reference,nom);
-    printf("entrez de nouvelies informations :\n");
-     int T=0;
-    for(int i=0;i<x;i++)
-    {
-        if(strcmp( nom_modi ,nom[x])==0 || reference<x)
-        {
-             printf("Nouveau nom : ");
-            scanf("%s",&nom[i]);
-             printf("Nouveau prenom : ");
-            scanf("%s",&prenom[i]);
-            printf("Nouveau telephone : ");
-            scanf("%s",&telephone[i]);
-            printf("Nouveau age : ");
-            scanf("%s",&age[i]);
-            printf("Nouveau statut : ");
-            scanf("%s",&statut[i]);
-            printf("Nouveau date : ");
-            scanf("%s",&date[i]);
-            printf("les informations a bien  mise ajoure");
-            T++;
+void modifier() {
+    char nom_modi[50];
+    int found = 0;
+
+    printf("entrez le nom ou la reference a modifier: ");
+    scanf("%s", nom_modi);
+
+    for (int i = 0; i < x; i++) {
+        if (strcmp(nom_modi, nom[i]) == 0) {
+            printf("nouveau nom: ");
+            scanf("%s", nom[i]);
+            printf("nouveau prenom: ");
+            scanf("%s", prenom[i]);
+            printf("nouveau telephone: ");
+            scanf("%s", telephone[i]);
+            printf("nouvel age: ");
+            scanf("%s", age[i]);
+            printf("nouveau statut: ");
+            scanf("%s", statut[i]);
+            printf("nouvelle date: ");
+            scanf("%s", date[i]);
+
+            printf("les informations ont ete bien mises a jour.\n");
+            found = 1;
+            break;
         }
     }
-    if(T==0)printf("le nom no trouve pas");
+    if (!found) {
+        printf("reservation non trouvee.\n");
+    }
 }
-void afichage()
-{
-    for (int i=0;i<x;i++)
-    {
+
+void afficher() {
+    for (int i = 0; i < x; i++) {
         printf("\n---------------------------------------------\n");
-
-        printf("*Nom : %s\n",nom);
-        printf("*prenom : %s\n",prenom);
-        printf("*telephone : %s\n",telephone);
-        printf("*age : %s\n",age);
-        printf("*statut : %s\n",statut);
-        printf("*date : %s\n",date);
+        printf("nom: %s\n", nom[i]);
+        printf("prenom: %s\n", prenom[i]);
+        printf("telephone: %s\n", telephone[i]);
+        printf("age: %s\n", age[i]);
+        printf("statut: %s\n", statut[i]);
+        printf("date: %s\n", date[i]);
     }
 }
-void supprimer()
-{
-    printf("entrez le  reference quevous souhaitez superimer :\n");
-    printf("Nom : ");
-    scanf("%s",nom_sup);
-    for(int i=0;i<x;i++)
-    {
-        if(strcmp(nom_sup,nom[i])==0)
-        {
-            strcpy(nom[i],nom[i-1]);
-            strcpy(prenom[i],prenom[i-1]);
-            strcpy(telephone[i],telephone[i-1]);
-            strcpy(age[i],age[i-1]);
-            strcpy(statut[i],statut[i-1]);
-            strcpy(date[i],date[i-1]);
-            x--;
-            S++;
-            printf("element bien superimer");
 
+void supprimer() {
+    printf("entrez le nom que vous souhaitez supprimer: ");
+    scanf("%s", nom_sup);
+
+    int found = 0;
+    for (int i = 0; i < x; i++) {
+        if (strcmp(nom_sup, nom[i]) == 0) {
+            for (int j = i; j < x - 1; j++) {
+                strcpy(nom[j], nom[j + 1]);
+                strcpy(prenom[j], prenom[j + 1]);
+                strcpy(telephone[j], telephone[j + 1]);
+                strcpy(age[j], age[j + 1]);
+                strcpy(statut[j], statut[j + 1]);
+                strcpy(date[j], date[j + 1]);
+            }
+            x--;
+            found = 1;
+            printf("reservation supprimee avec succes.\n");
+            break;
         }
     }
-        if (S==0){printf("element non trouver");}
+    if (!found) {
+        printf("reservation non trouvee.\n");
+    }
 }
 
-
-
-int main()
-{
-    debu :
-
-    menu () ;
-
-
-   switch (choix){
-   case 1 :
-       ajouter() ;
-       goto debu ;
-
-    break ;
-    case 2 :
-       modifier () ;
-       goto debu ;
-    break ;
-    case 3 :
-       supprimer () ;
-       goto debu ;
-    break ;
-    case 4 :
-       afichage () ;
-    goto debu ;
-    break ;
-
-
-
-
-
-   }
-
-
-
-
-
-
-
+int main() {
+    int choix;
+    while (1) {
+        menu(&choix);
+        switch (choix) {
+            case 1:
+                ajouter();
+                break;
+            case 2:
+                modifier();
+                break;
+            case 3:
+                supprimer();
+                break;
+            case 4:
+                afficher();
+                break;
+            case 8:
+                printf("quitter le programme.\n");
+                exit(0);
+            default:
+                printf("choix invalide, reessayez.\n");
+                break;
+        }
+    }
     return 0;
 }

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1727921399 source:c:\users\pc\desktop\project_soutenace\project_soutenace\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
