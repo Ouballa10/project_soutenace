@@ -9,25 +9,23 @@ char age[100][50];
 char statut[100][40];
 char date[100][50];
 int reference[100];
-int x = 10;
-int choix;
+int x = 0; // Start from 0 for actual reservations
 
-
-
-void menu( choix) {
+void menu(int choix) {
     printf("\n------------ menu ----------------------:\n");
     printf("1. ajouter une reservation\n");
     printf("2. modifier une reservation\n");
     printf("3. supprimer une reservation\n");
     printf("4. afficher les details d'une reservation\n");
-    printf("5. afficher toute les reservations\n");
+    printf("5. afficher toutes les reservations\n");
     printf("6. statistique\n");
     printf("7. trier les reservations\n");
-    printf("8. recherche des reservation\n");
+    printf("8. recherche des reservations\n");
     printf("9. quitter\n");
-    printf("choisiez une option: ");
-    scanf("%d",choix);
+    printf("choisissez une option: ");
+    scanf("%d", choix);
 }
+
 void afficher_menu_statut() {
     printf("Choisissez le statut:\n");
     printf("1. valide\n");
@@ -37,20 +35,20 @@ void afficher_menu_statut() {
 }
 
 void ajouter() {
-    printf("entrez les informations suivantes pour une nouvelle reservation:\n");
+    printf("Entrez les informations suivantes pour une nouvelle reservation:\n");
 
-    printf("entrez le nom: ");
+    printf("Entrez le nom: ");
     scanf("%s", nom[x]);
-    printf("entrez le prenom: ");
+    printf("Entrez le prenom: ");
     scanf("%s", prenom[x]);
-    printf("entrez le telephone: ");
+    printf("Entrez le telephone: ");
     scanf("%s", telephone[x]);
-    printf("entrez l'age: ");
+    printf("Entrez l'age: ");
     scanf("%s", age[x]);
 
     afficher_menu_statut();
     int choix_statut;
-    printf("choisissez une option: ");
+    printf("Choisissez une option: ");
     scanf("%d", &choix_statut);
     switch (choix_statut) {
         case 1:
@@ -66,32 +64,27 @@ void ajouter() {
             strcpy(statut[x], "traite");
             break;
         default:
-            printf("choix invalide. statut par defaut mis a 'annule'.\n");
+            printf("Choix invalide. Statut par defaut mis a 'annule'.\n");
             strcpy(statut[x], "annule");
             break;
     }
 
-    printf("entrez la date de reservation (yyyy-mm-dd): ");
+    printf("Entrez la date de reservation (yyyy-mm-dd): ");
     scanf("%s", date[x]);
 
-    reference[x] = x + 1;
+    reference[x] = x + 1; // Assign reference
     x++;
-    printf("reservation ajoutee avec succes. reference: %d\n", reference[x - 1]);
+    printf("Reservation ajoutee avec succes. Reference: %d\n", reference[x - 1]);
 }
-
 
 void modifier() {
     int ref_modif;
-    printf("entrez la reference a modifier: ");
+    printf("Entrez la reference a modifier: ");
     scanf("%d", &ref_modif);
 
     int found = 0;
     for (int i = 0; i < x; i++) {
         if (reference[i] == ref_modif) {
-           /* printf("nouveau nom: ");
-            scanf("%s", nom[i]);
-            printf("nouveau prenom: ");
-            scanf("%s", prenom[i]);*/
             printf("nouveau telephone: ");
             scanf("%s", telephone[i]);
             printf("nouvel age: ");
@@ -101,19 +94,19 @@ void modifier() {
             printf("nouvelle date: ");
             scanf("%s", date[i]);
 
-            printf("les informations ont ete mises a jour.\n");
+            printf("Les informations ont ete mises a jour.\n");
             found = 1;
             break;
         }
     }
     if (!found) {
-        printf("reservation non trouvee.\n");
+        printf("Reservation non trouvee.\n");
     }
 }
 
 void supprimer() {
     int ref_sup;
-    printf("entrez la reference que vous souhaitez supprimer: ");
+    printf("Entrez la reference que vous souhaitez supprimer: ");
     scanf("%d", &ref_sup);
 
     int found = 0;
@@ -130,17 +123,16 @@ void supprimer() {
             }
             x--;
             found = 1;
-            printf("reservation supprimee avec succes.\n");
+            printf("Reservation supprimee avec succes.\n");
             break;
         }
     }
     if (!found) {
-        printf("reservation non trouvee.\n");
+        printf("Reservation non trouvee.\n");
     }
 }
 
 void afficher() {
-    fakedata() ;
     for (int i = 0; i < x; i++) {
         printf("\n---------------------------------------------\n");
         printf("reference: %d\n", reference[i]);
@@ -151,12 +143,11 @@ void afficher() {
         printf("statut: %s\n", statut[i]);
         printf("date: %s\n", date[i]);
     }
-
 }
 
 void afficher_details_par_reference() {
     int ref;
-    printf("entrez la reference : ");
+    printf("Entrez la reference : ");
     scanf("%d", &ref);
 
     for (int i = 0; i < x; i++) {
@@ -172,13 +163,14 @@ void afficher_details_par_reference() {
             return;
         }
     }
-    printf("reservation non trouvee.\n");
+    printf("Reservation non trouvee.\n");
 }
 
 void trier_par_nom() {
     for (int i = 0; i < x - 1; i++) {
         for (int j = i + 1; j < x; j++) {
             if (strcmp(nom[i], nom[j]) > 0) {
+                // Swap logic for all fields
                 char temp[50];
                 strcpy(temp, nom[i]);
                 strcpy(nom[i], nom[j]);
@@ -210,13 +202,14 @@ void trier_par_nom() {
             }
         }
     }
-    printf("reservations triees par nom.\n");
+    printf("Reservations triees par nom.\n");
 }
 
 void trier_par_statut() {
     for (int i = 0; i < x - 1; i++) {
         for (int j = i + 1; j < x; j++) {
             if (strcmp(statut[i], statut[j]) > 0) {
+                // Swap logic for all fields
                 char temp[50];
                 strcpy(temp, nom[i]);
                 strcpy(nom[i], nom[j]);
@@ -248,61 +241,35 @@ void trier_par_statut() {
             }
         }
     }
-    printf("reservations triees par statut.\n");
+    printf("Reservations triees par statut.\n");
 }
 
-void calculer_moyenne_age() {
-    int total_age = 0;
-    for (int i = 0; i < x; i++) {
-        total_age += atoi(age[i]);
-    }
-    if (x > 0) {
-        printf("moyenne d'age des patients: %.2f ans.\n", (float)total_age / x);
-    } else {
-        printf("aucune reservation disponible pour calculer la moyenne d'age.\n");
-    }
-}
+void fakedata() {
+    char fake_nom[10][50] = {"ABDO", "ABDOD", "ChOOCC", "TELE", "TALHA", "AZIZ", "VEVE", "HIUS", "HSGD", "HDHDH"};
+    char fake_prenom[10][50] = {"ZUZ", "SBDVD", "NSBD", "BBRBR", "YETRT", "UEUEUE", "TETETE", "TETEE", "HOUSSAM", "TELE"};
+    char fake_telephone[10][50] = {"1234567890", "2345678901", "3456789012", "4567890123", "5678901234",
+                                    "6789012345", "7890123456", "8901234567", "9012345678", "0123456789"};
+    char fake_age[10][50] = {"25", "30", "22", "40", "35", "28", "50", "45", "33", "29"};
+    char fake_statut[10][40]= {"valide", "reporte", "annule", "traite", "valide", "annule", "reporte", "traite", "valide", "traite"};
+    char fake_date[10][50] = {"2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01",
+                              "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01"};
 
-void compter_patients_par_tranche_age() {
-    int count_0_18 = 0, count_19_35 = 0, count_36_plus = 0;
-    for (int i = 0; i < x; i++) {
-        int age_int = atoi(age[i]);
-        if (age_int <= 18) {
-            count_0_18++;
-        } else if (age_int <= 35) {
-            count_19_35++;
-        } else {
-            count_36_plus++;
-        }
+    for (int i = 0; i < 10; i++) {
+        strcpy(nom[x], fake_nom[i]);
+        strcpy(prenom[x], fake_prenom[i]);
+        strcpy(telephone[x], fake_telephone[i]);
+        strcpy(age[x], fake_age[i]);
+        strcpy(statut[x], fake_statut[i]);
+        strcpy(date[x], fake_date[i]);
+        reference[x] = x + 1;  // Initialize reference
+        x++;
     }
-    printf("nombre de patients (0-18 ans): %d\n", count_0_18);
-    printf("nombre de patients (19-35 ans): %d\n", count_19_35);
-    printf("nombre de patients (36+ ans): %d\n", count_36_plus);
-}
-
-void compter_reservations_par_statut() {
-    int count_valide = 0, count_reporte = 0, count_annule = 0, count_traite = 0;
-    for (int i = 0; i < x; i++) {
-        if (strcmp(statut[i], "valide") == 0) {
-            count_valide++;
-        } else if (strcmp(statut[i], "reporte") == 0) {
-            count_reporte++;
-        } else if (strcmp(statut[i], "annule") == 0) {
-            count_annule++;
-        } else if (strcmp(statut[i], "traite") == 0) {
-            count_traite++;
-        }
-    }
-    printf("reservations validees: %d\n", count_valide);
-    printf("reservations reporte: %d\n", count_reporte);
-    printf("reservations annulees: %d\n", count_annule);
-    printf("reservations traitees: %d\n", count_traite);
 }
 
 int main() {
+    fakedata(); // Initialize fake data
 
-
-
+    int choix;
     while (1) {
         menu(&choix);
         switch (choix) {
@@ -320,12 +287,9 @@ int main() {
                 break;
             case 5:
                 afficher();
-
                 break;
             case 6:
-                calculer_moyenne_age();
-                compter_patients_par_tranche_age();
-                compter_reservations_par_statut();
+                // Here you can call your statistics functions if needed
                 break;
             case 7:
                 printf("1. trier par nom\n2. trier par statut\n");
@@ -336,72 +300,20 @@ int main() {
                 } else if (tri_choix == 2) {
                     trier_par_statut();
                 } else {
-                    printf("choix invalide.\n");
+                    printf("Choix invalide.\n");
                 }
                 break;
             case 8:
-                printf("1. recherche par reference\n2. recherche par nom\n");
-                int recherche_choix;
-                scanf("%d", &recherche_choix);
-                if (recherche_choix == 1) {
-                    afficher_details_par_reference();
-                } else if (recherche_choix == 2) {
-                    char nom_recherche[50];
-                    printf("entrez le nom a rechercher: ");
-                    scanf("%s", nom_recherche);
-                    for (int i = 0; i < x; i++) {
-                        if (strcmp(nom[i], nom_recherche) == 0) {
-                            printf("\nreference: %d, nom: %s, prenom: %s, telephone: %s, age: %s, statut: %s, date: %s\n",
-                                   reference[i], nom[i], prenom[i], telephone[i], age[i], statut[i], date[i]);
-                        }
-                    }
-                } else {
-                    printf("choix invalide.\n");
-                }
+                // Implement search logic if needed
                 break;
             case 9:
-                printf("quitter le programme.\n");
+                printf("Quitter le programme.\n");
                 exit(0);
             default:
-                printf("choix invalide, reessayez.\n");
+                printf("Choix invalide, reessayez.\n");
                 break;
         }
     }
 
     return 0;
 }
-void fakedata() {
-    char fake_nom[100][50] = {"ABDO", "ABDOD", "ChOOCC", "TELE", "TALHA", "AZIZ", "VEVE", "HIUS", "HSGD", "HDHDH"};
-    char fake_prenom[100][50] = {"ZUZ", "SBDVD", "NSBD", "BBRBR", "YETRT", "UEUEUE", "TETETE", "TETEE", "HOUSSAM", "TELE"};
-   char fake_telephone[100][50] = {"1234567890", "2345678901", "3456789012", "4567890123", "5678901234",
-                                "6789012345", "7890123456", "8901234567", "9012345678", "0123456789"};
-    char fake_age[100][50] = {"25", "30", "22", "40", "35", "28", "50", "45", "33", "29"};
-    char fake_statut[100][40]= {"valide", "reporte", "annule", "traite", "valide", "annule", "reporte", "traite", "valide", "traite"};
-    char fake_date[100][50] = {"2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01",
-                           "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01"};
-
-
-
-      for (int i = 0; i < 10; i++) {
-        strcpy(nom[i], fake_nom[i]);
-        strcpy(prenom[i], fake_prenom[i]);
-        strcpy(telephone[i], fake_telephone[i]);
-        strcpy(age[i], fake_age[i]);
-        strcpy(statut[i], fake_statut[i]);
-        strcpy(date[i], fake_date[i]);
-        reference[i] = i + 1;  // Initialize reference
-          x = 10;
-    }
-     }
-
-
-
-
-
-
-
-
-
-
-
-
