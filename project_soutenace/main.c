@@ -12,6 +12,8 @@ int reference[100];
 int x = 10;
 int choix;
 
+
+
 void menu( choix) {
     printf("\n------------ menu ----------------------:\n");
     printf("1. ajouter une reservation\n");
@@ -138,6 +140,7 @@ void supprimer() {
 }
 
 void afficher() {
+    fakedata() ;
     for (int i = 0; i < x; i++) {
         printf("\n---------------------------------------------\n");
         printf("reference: %d\n", reference[i]);
@@ -148,7 +151,7 @@ void afficher() {
         printf("statut: %s\n", statut[i]);
         printf("date: %s\n", date[i]);
     }
-    fakedata() ;
+
 }
 
 void afficher_details_par_reference() {
@@ -299,6 +302,7 @@ void compter_reservations_par_statut() {
 int main() {
 
 
+
     while (1) {
         menu(&choix);
         switch (choix) {
@@ -316,7 +320,6 @@ int main() {
                 break;
             case 5:
                 afficher();
-                fakedata() ;
 
                 break;
             case 6:
@@ -367,22 +370,35 @@ int main() {
 
     return 0;
 }
-
 void fakedata() {
-    char nom[100][50] = {"ABDO", "ABDOD", "ChOOCC", "TELE", "TALHA", "AZIZ", "VEVE", "HIUS", "HSGD", "HDHDH"};
-    char prenom[100][50] = {"ZUZ", "SBDVD", "NSBD", "BBRBR", "YETRT", "UEUEUE", "TETETE", "TETEE", "HOUSSAM", "TELE"};
-   char telephone[100][50] = {"1234567890", "2345678901", "3456789012", "4567890123", "5678901234",
+    char fake_nom[100][50] = {"ABDO", "ABDOD", "ChOOCC", "TELE", "TALHA", "AZIZ", "VEVE", "HIUS", "HSGD", "HDHDH"};
+    char fake_prenom[100][50] = {"ZUZ", "SBDVD", "NSBD", "BBRBR", "YETRT", "UEUEUE", "TETETE", "TETEE", "HOUSSAM", "TELE"};
+   char fake_telephone[100][50] = {"1234567890", "2345678901", "3456789012", "4567890123", "5678901234",
                                 "6789012345", "7890123456", "8901234567", "9012345678", "0123456789"};
-    char age[100][50] = {"25", "30", "22", "40", "35", "28", "50", "45", "33", "29"};
-    char statut[100][40]= {"valide", "reporte", "annule", "traite", "valide", "annule", "reporte", "traite", "valide", "traite"};
-    char date[100][50] = {"2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01",
+    char fake_age[100][50] = {"25", "30", "22", "40", "35", "28", "50", "45", "33", "29"};
+    char fake_statut[100][40]= {"valide", "reporte", "annule", "traite", "valide", "annule", "reporte", "traite", "valide", "traite"};
+    char fake_date[100][50] = {"2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01",
                            "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01"};
-    int reference[100]= {1,2,3,4,5,6,7,8,9,10};
 
 
 
-    x = 10; // Set the count of current reservations to 10
-}
+      for (int i = 0; i < 10; i++) {
+        strcpy(nom[i], fake_nom[i]);
+        strcpy(prenom[i], fake_prenom[i]);
+        strcpy(telephone[i], fake_telephone[i]);
+        strcpy(age[i], fake_age[i]);
+        strcpy(statut[i], fake_statut[i]);
+        strcpy(date[i], fake_date[i]);
+        reference[i] = i + 1;  // Initialize reference
+          x = 10;
+    }
+     }
+
+
+
+
+
+
 
 
 
