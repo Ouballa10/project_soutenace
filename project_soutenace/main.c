@@ -8,19 +8,20 @@ char telephone[100][50];
 char age[100][50];
 char statut[100][40];
 char date[100][50];
-int reference = 0;
+int reference[100];
 int x = 0;
-char nom_sup[50];
 
-void menu(int *choix) {
+void menu(int choix) {
     printf("\n------------ menu ----------------------:\n");
     printf("1. ajouter une reservation\n");
     printf("2. modifier une reservation\n");
     printf("3. supprimer une reservation\n");
     printf("4. afficher les details d'une reservation\n");
-    printf("5. statistiques\n");
-    printf("6. trier les réservations\n");
-    printf("7. quitter\n");
+    printf("5. afficher toutes les reservations\n");
+    printf("6. statistiques\n");
+    printf("7. trier les reservations\n");
+    printf("8. recherche des reservations\n");
+    printf("9. quitter\n");
     printf("choisissez une option: ");
     scanf("%d", choix);
 }
@@ -41,19 +42,19 @@ void ajouter() {
     printf("entrez la date de reservation (yyyy-mm-dd): ");
     scanf("%s", date[x]);
 
-    reference = x + 1;
+    reference[x] = x + 1;
     x++;
+    printf("reservation ajoutee avec succes. reference: %d\n", reference[x - 1]);
 }
 
 void modifier() {
-    char nom_modi[50];
+    int ref_modi;
+    printf("entrez la reference a modifier: ");
+    scanf("%d", &ref_modi);
+
     int found = 0;
-
-    printf("entrez le nom ou la reference a modifier: ");
-    scanf("%s", nom_modi);
-
     for (int i = 0; i < x; i++) {
-        if (strcmp(nom_modi, nom[i]) == 0) {
+        if (reference[i] == ref_modi) {
             printf("nouveau nom: ");
             scanf("%s", nom[i]);
             printf("nouveau prenom: ");
@@ -67,7 +68,7 @@ void modifier() {
             printf("nouvelle date: ");
             scanf("%s", date[i]);
 
-            printf("les informations ont ete bien mises a jour.\n");
+            printf("les informations ont ete mises a jour.\n");
             found = 1;
             break;
         }
@@ -77,25 +78,14 @@ void modifier() {
     }
 }
 
-void afficher() {
-    for (int i = 0; i < x; i++) {
-        printf("\n---------------------------------------------\n");
-        printf("nom: %s\n", nom[i]);
-        printf("prenom: %s\n", prenom[i]);
-        printf("telephone: %s\n", telephone[i]);
-        printf("age: %s\n", age[i]);
-        printf("statut: %s\n", statut[i]);
-        printf("date: %s\n", date[i]);
-    }
-}
-
 void supprimer() {
-    printf("entrez le nom que vous souhaitez supprimer: ");
-    scanf("%s", nom_sup);
+    int ref_sup;
+    printf("entrez la reference que vous souhaitez supprimer: ");
+    scanf("%d", &ref_sup);
 
     int found = 0;
     for (int i = 0; i < x; i++) {
-        if (strcmp(nom_sup, nom[i]) == 0) {
+        if (reference[i] == ref_sup) {
             for (int j = i; j < x - 1; j++) {
                 strcpy(nom[j], nom[j + 1]);
                 strcpy(prenom[j], prenom[j + 1]);
@@ -103,6 +93,7 @@ void supprimer() {
                 strcpy(age[j], age[j + 1]);
                 strcpy(statut[j], statut[j + 1]);
                 strcpy(date[j], date[j + 1]);
+                reference[j] = reference[j + 1];
             }
             x--;
             found = 1;
@@ -115,6 +106,164 @@ void supprimer() {
     }
 }
 
+void afficher() {
+    for (int i = 0; i < x; i++) {
+        printf("\n---------------------------------------------\n");
+        printf("reference: %d\n", reference[i]);
+        printf("nom: %s\n", nom[i]);
+        printf("prenom: %s\n", prenom[i]);
+        printf("telephone: %s\n", telephone[i]);
+        printf("age: %s\n", age[i]);
+        printf("statut: %s\n", statut[i]);
+        printf("date: %s\n", date[i]);
+    }
+}
+
+void afficher_details_par_reference() {
+    int ref;
+    printf("entrez la reference a consulter: ");
+    scanf("%d", &ref);
+
+    for (int i = 0; i < x; i++) {
+        if (reference[i] == ref) {
+            printf("\n---------------------------------------------\n");
+            printf("reference: %d\n", reference[i]);
+            printf("nom: %s\n", nom[i]);
+            printf("prenom: %s\n", prenom[i]);
+            printf("telephone: %s\n", telephone[i]);
+            printf("age: %s\n", age[i]);
+            printf("statut: %s\n", statut[i]);
+            printf("date: %s\n", date[i]);
+            return;
+        }
+    }
+    printf("reservation non trouvee.\n");
+}
+
+void trier_par_nom() {
+    for (int i = 0; i < x - 1; i++) {
+        for (int j = i + 1; j < x; j++) {
+            if (strcmp(nom[i], nom[j]) > 0) {
+                char temp[50];
+                strcpy(temp, nom[i]);
+                strcpy(nom[i], nom[j]);
+                strcpy(nom[j], temp);
+
+                strcpy(temp, prenom[i]);
+                strcpy(prenom[i], prenom[j]);
+                strcpy(prenom[j], temp);
+
+                strcpy(temp, telephone[i]);
+                strcpy(telephone[i], telephone[j]);
+                strcpy(telephone[j], temp);
+
+                strcpy(temp, age[i]);
+                strcpy(age[i], age[j]);
+                strcpy(age[j], temp);
+
+                strcpy(temp, statut[i]);
+                strcpy(statut[i], statut[j]);
+                strcpy(statut[j], temp);
+
+                strcpy(temp, date[i]);
+                strcpy(date[i], date[j]);
+                strcpy(date[j], temp);
+
+                int temp_ref = reference[i];
+                reference[i] = reference[j];
+                reference[j] = temp_ref;
+            }
+        }
+    }
+    printf("reservations triees par nom.\n");
+}
+
+void trier_par_statut() {
+    for (int i = 0; i < x - 1; i++) {
+        for (int j = i + 1; j < x; j++) {
+            if (strcmp(statut[i], statut[j]) > 0) {
+                char temp[50];
+                strcpy(temp, nom[i]);
+                strcpy(nom[i], nom[j]);
+                strcpy(nom[j], temp);
+
+                strcpy(temp, prenom[i]);
+                strcpy(prenom[i], prenom[j]);
+                strcpy(prenom[j], temp);
+
+                strcpy(temp, telephone[i]);
+                strcpy(telephone[i], telephone[j]);
+                strcpy(telephone[j], temp);
+
+                strcpy(temp, age[i]);
+                strcpy(age[i], age[j]);
+                strcpy(age[j], temp);
+
+                strcpy(temp, statut[i]);
+                strcpy(statut[i], statut[j]);
+                strcpy(statut[j], temp);
+
+                strcpy(temp, date[i]);
+                strcpy(date[i], date[j]);
+                strcpy(date[j], temp);
+
+                int temp_ref = reference[i];
+                reference[i] = reference[j];
+                reference[j] = temp_ref;
+            }
+        }
+    }
+    printf("reservations triees par statut.\n");
+}
+
+void calculer_moyenne_age() {
+    int total_age = 0;
+    for (int i = 0; i < x; i++) {
+        total_age += atoi(age[i]);
+    }
+    if (x > 0) {
+        printf("moyenne d'age des patients: %.2f ans.\n", (float)total_age / x);
+    } else {
+        printf("aucune reservation disponible pour calculer la moyenne d'age.\n");
+    }
+}
+
+void compter_patients_par_tranche_age() {
+    int count_0_18 = 0, count_19_35 = 0, count_36_plus = 0;
+    for (int i = 0; i < x; i++) {
+        int age_int = atoi(age[i]);
+        if (age_int <= 18) {
+            count_0_18++;
+        } else if (age_int <= 35) {
+            count_19_35++;
+        } else {
+            count_36_plus++;
+        }
+    }
+    printf("nombre de patients (0-18 ans): %d\n", count_0_18);
+    printf("nombre de patients (19-35 ans): %d\n", count_19_35);
+    printf("nombre de patients (36+ ans): %d\n", count_36_plus);
+}
+
+void compter_reservations_par_statut() {
+    int count_valide = 0, count_reporte = 0, count_annule = 0, count_traite = 0;
+    for (int i = 0; i < x; i++) {
+        if (strcmp(statut[i], "valide") == 0) {
+            count_valide++;
+        } else if (strcmp(statut[i], "reporte") == 0) {
+            count_reporte++;
+        } else if (strcmp(statut[i], "annule") == 0) {
+            count_annule++;
+        } else if (strcmp(statut[i], "traite") == 0) {
+            count_traite++;
+        }
+    }
+    printf("reservations validees: %d\n", count_valide);
+    printf("reservations reporte: %d\n", count_reporte);
+    printf("reservations annulees: %d\n", count_annule);
+    printf("reservations traitees: %d\n", count_traite);
+}
+
 int main() {
     int choix;
     while (1) {
@@ -122,22 +271,57 @@ int main() {
         switch (choix) {
             case 1:
                 ajouter();
-            break;
+                break;
             case 2:
                 modifier();
-            break;
+                break;
             case 3:
                 supprimer();
-            break;
+                break;
             case 4:
+                afficher_details_par_reference();
+                break;
+            case 5:
                 afficher();
-            break;
-            case 5 :
-            break ;
-            case 6 :
-            break ;
-
+                break;
+            case 6:
+                calculer_moyenne_age();
+                compter_patients_par_tranche_age();
+                compter_reservations_par_statut();
+                break;
             case 7:
+                printf("1. trier par nom\n2. trier par statut\n");
+                int tri_choix;
+                scanf("%d", &tri_choix);
+                if (tri_choix == 1) {
+                    trier_par_nom();
+                } else if (tri_choix == 2) {
+                    trier_par_statut();
+                } else {
+                    printf("choix invalide.\n");
+                }
+                break;
+            case 8:
+                printf("1. recherche par reference\n2. recherche par nom\n");
+                int recherche_choix;
+                scanf("%d", &recherche_choix);
+                if (recherche_choix == 1) {
+                    afficher_details_par_reference();
+                } else if (recherche_choix == 2) {
+                    char nom_recherche[50];
+                    printf("entrez le nom a rechercher: ");
+                    scanf("%s", nom_recherche);
+                    for (int i = 0; i < x; i++) {
+                        if (strcmp(nom[i], nom_recherche) == 0) {
+                            printf("\nreference: %d, nom: %s, prenom: %s, telephone: %s, age: %s, statut: %s, date: %s\n",
+                                   reference[i], nom[i], prenom[i], telephone[i], age[i], statut[i], date[i]);
+                        }
+                    }
+                } else {
+                    printf("choix invalide.\n");
+                }
+                break;
+            case 9:
                 printf("quitter le programme.\n");
                 exit(0);
             default:
