@@ -20,8 +20,9 @@ void menu(int choix) {
     printf("5. afficher toutes les reservations\n");
     printf("6. statistique\n");
     printf("7. trier les reservations\n");
-    printf("8. recherche des reservations\n");
-    printf("9. quitter\n");
+    printf("8. recherche des reservations par refrence\n");
+    printf("9. recherche des reservations par nome\n");
+    printf("10. quitter\n");
     printf("choisissez une option: ");
     scanf("%d", choix);
 }
@@ -265,6 +266,47 @@ void fakedata() {
         x++;
     }
 }
+void recherche_refrence() {
+    int ref;
+    printf("entrez la reference : ");
+    scanf("%d", &ref);
+
+    for (int i = 0; i < x; i++) {
+        if (reference[i] == ref) {
+            printf("\n---------------------------------------------\n");
+            printf("reference: %d\n", reference[i]);
+            printf("nom: %s\n", nom[i]);
+            printf("prenom: %s\n", prenom[i]);
+            printf("telephone: %s\n", telephone[i]);
+            printf("age: %s\n", age[i]);
+            printf("statut: %s\n", statut[i]);
+            printf("date: %s\n", date[i]);
+            return;
+        }
+    }
+    printf("reservation non trouvee.\n");
+}
+void recherche_nom() {
+    char rech_nom ;
+    printf("entrez la NOM : ");
+    scanf("%s", rech_nom);
+
+    for (int i = 0; i < x; i++) {
+        if (nom[i] == rech_nom) {
+            printf("\n---------------------------------------------\n");
+            printf("reference: %d\n", reference[i]);
+            printf("nom: %s\n", nom[i]);
+            printf("prenom: %s\n", prenom[i]);
+            printf("telephone: %s\n", telephone[i]);
+            printf("age: %s\n", age[i]);
+            printf("statut: %s\n", statut[i]);
+            printf("date: %s\n", date[i]);
+            return;
+        }
+    }
+    printf("reservation non trouvee.\n");
+}
+
 
 int main() {
     fakedata();
@@ -304,9 +346,14 @@ int main() {
                 }
                 break;
             case 8:
+                recherche_refrence() ;
 
                 break;
-            case 9:
+                 case 9:
+                recherche_nom() ;
+
+                break;
+            case 10:
                 printf("quitter le programme.\n");
                 exit(0);
             default:
