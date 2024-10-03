@@ -287,12 +287,13 @@ void recherche_refrence() {
     printf("reservation non trouvee.\n");
 }
 void recherche_nom() {
-    char rech_nom ;
-    printf("entrez la NOM : ");
+    char rech_nom[50];
+    printf("entrez le nom : ");
     scanf("%s", rech_nom);
 
+    int found = 0;  // To track if any reservation is found
     for (int i = 0; i < x; i++) {
-        if (nom[i] == rech_nom) {
+        if (strcmp(nom[i], rech_nom) == 0) {
             printf("\n---------------------------------------------\n");
             printf("reference: %d\n", reference[i]);
             printf("nom: %s\n", nom[i]);
@@ -301,11 +302,14 @@ void recherche_nom() {
             printf("age: %s\n", age[i]);
             printf("statut: %s\n", statut[i]);
             printf("date: %s\n", date[i]);
-            return;
+            found = 1;  // Mark as found
         }
     }
-    printf("reservation non trouvee.\n");
+    if (!found) {
+        printf("reservation non trouvee.\n");
+    }
 }
+
 
 
 int main() {
