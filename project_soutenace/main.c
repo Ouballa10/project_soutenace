@@ -172,7 +172,7 @@ void trier_par_nom() {
         for (int j = i + 1; j < x; j++) {
             if (strcmp(nom[i], nom[j]) > 0) {
 
-                char temp[50];
+                char temp[50];// CHANGE
                 strcpy(temp, nom[i]);
                 strcpy(nom[i], nom[j]);
                 strcpy(nom[j], temp);
@@ -203,14 +203,14 @@ void trier_par_nom() {
             }
         }
     }
-    printf("reservations triees par nom.\n");
+    printf("reservations tries par nom.\n");
 }
 
 void trier_par_statut() {
     for (int i = 0; i < x - 1; i++) {
         for (int j = i + 1; j < x; j++) {
             if (strcmp(statut[i], statut[j]) > 0) {
-
+                // Swap the data
                 char temp[50];
                 strcpy(temp, nom[i]);
                 strcpy(nom[i], nom[j]);
@@ -242,8 +242,9 @@ void trier_par_statut() {
             }
         }
     }
-    printf("reservations triees par statut.\n");
+    printf("reservations tries par statut.\n");
 }
+
 
 void fakedata() {
     char fake_nom[10][50] = {"ABDO", "ABDOD", "ChOOCC", "TELE", "TALHA", "AZIZ", "VEVE", "HIUS", "HSGD", "HDHDH"};
