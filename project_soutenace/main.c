@@ -17,13 +17,20 @@ void menu(int choix) {
     printf("2. modifier une reservation\n");
     printf("3. supprimer une reservation\n");
     printf("4. afficher les details d'une reservation\n");
-    printf("5. afficher toutes les reservations\n");
-    printf("6. statistiques\n");
+    printf("5. afficher toute les reservations\n");
+    printf("6. statistique\n");
     printf("7. trier les reservations\n");
-    printf("8. recherche des reservations\n");
+    printf("8. recherche des reservation\n");
     printf("9. quitter\n");
-    printf("choisissez une option: ");
-    scanf("%d", choix);
+    printf("choisiez une option: ");
+    scanf("%d",choix);
+}
+void afficher_menu_statut() {
+    printf("Choisissez le statut:\n");
+    printf("1. valide\n");
+    printf("2. reporte\n");
+    printf("3. annule\n");
+    printf("4. traite\n");
 }
 
 void ajouter() {
@@ -37,8 +44,30 @@ void ajouter() {
     scanf("%s", telephone[x]);
     printf("entrez l'age: ");
     scanf("%s", age[x]);
-    printf("entrez le statut (valide, reporte, annule, traite): ");
-    scanf("%s", statut[x]);
+
+    afficher_menu_statut();
+    int choix_statut;
+    printf("choisissez une option: ");
+    scanf("%d", &choix_statut);
+    switch (choix_statut) {
+        case 1:
+            strcpy(statut[x], "valide");
+            break;
+        case 2:
+            strcpy(statut[x], "reporte");
+            break;
+        case 3:
+            strcpy(statut[x], "annule");
+            break;
+        case 4:
+            strcpy(statut[x], "traite");
+            break;
+        default:
+            printf("choix invalide. statut par defaut mis a 'annule'.\n");
+            strcpy(statut[x], "annule");
+            break;
+    }
+
     printf("entrez la date de reservation (yyyy-mm-dd): ");
     scanf("%s", date[x]);
 
@@ -47,18 +76,19 @@ void ajouter() {
     printf("reservation ajoutee avec succes. reference: %d\n", reference[x - 1]);
 }
 
+
 void modifier() {
-    int ref_modi;
+    int ref_modif;
     printf("entrez la reference a modifier: ");
-    scanf("%d", &ref_modi);
+    scanf("%d", &ref_modif);
 
     int found = 0;
     for (int i = 0; i < x; i++) {
-        if (reference[i] == ref_modi) {
-            printf("nouveau nom: ");
+        if (reference[i] == ref_modif) {
+           /* printf("nouveau nom: ");
             scanf("%s", nom[i]);
             printf("nouveau prenom: ");
-            scanf("%s", prenom[i]);
+            scanf("%s", prenom[i]);*/
             printf("nouveau telephone: ");
             scanf("%s", telephone[i]);
             printf("nouvel age: ");
@@ -121,7 +151,7 @@ void afficher() {
 
 void afficher_details_par_reference() {
     int ref;
-    printf("entrez la reference a consulter: ");
+    printf("entrez la reference : ");
     scanf("%d", &ref);
 
     for (int i = 0; i < x; i++) {
