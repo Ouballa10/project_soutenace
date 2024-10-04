@@ -273,6 +273,29 @@ void recherche_nom() {
         printf("reservation non trouvee.\n");
     }
 }
+void afficherStatistiques() {
+    int total = x;  // Utilisez x pour le nombre actuel de réservations
+    int valides = 0, reportees = 0, annulees = 0, traitee = 0;
+
+    for (int i = 0; i < x; i++) {
+        if (strcmp(statut[i], "valide") == 0)
+            valides++;
+        else if (strcmp(statut[i], "reporte") == 0)
+            reportees++;
+        else if (strcmp(statut[i], "annule") == 0)
+            annulees++;
+        else if (strcmp(statut[i], "traite") == 0)
+            traitee++;
+    }
+
+    printf("statistiques des reservations :\n");
+    printf("total : %d\n", total);
+    printf("validees : %d\n", valides);
+    printf("reportees : %d\n", reportees);
+    printf("annulees : %d\n", annulees);
+    printf("traitee : %d\n", traitee);
+}
+
 
 int main() {
     fakedata();
@@ -296,7 +319,7 @@ int main() {
                 afficher();
                 break;
             case 6:
-                // Statistiques (ajoutez des fonctions si nécessaire)
+                afficherStatistiques() ;
                 break;
             case 7:
 
